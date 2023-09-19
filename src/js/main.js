@@ -1,6 +1,3 @@
-// Short querySelector
-const $a = document.querySelector.bind(document);
-const $all = document.querySelectorAll.bind(document);
 const danhSachNV = new DanhSachNhanVien();
 
 function getInfoNV() {
@@ -13,6 +10,27 @@ function getInfoNV() {
   var chucVu = $a('#chucvu').value;
   var gioLam = $a('#gioLam').value;
   var form = $a('.modal-body form');
+
+  // validation
+  const valid = [
+    //* Validation Tài khoản
+    checkEmpty(taiKhoan, '#tbTKNV', 'Tài khoản không được trống'),
+    checkLength(
+      taiKhoan,
+      4,
+      6,
+      '#tbTKNV',
+      'Tài khoản từ 4-6 ký tự',
+      'Tài khoản không được trống'
+    ),
+    //* Validation Họ tên
+    checkEmpty(taiKhoan, '#tbTen', 'Họ tên không được trống'),
+    checkString(hoTen, '#tbTen', 'Họ tên không được chứa chữ số'),
+    //* Validation Tài khoản
+  ];
+
+  if (valid.includes(false)) return false;
+
   const nhanVien = new NhanVien(
     taiKhoan,
     hoTen,
@@ -32,8 +50,10 @@ function getInfoNV() {
 
 function themNV() {
   const nhanVien = getInfoNV();
-  danhSachNV.themNV(nhanVien);
-  renderNV(danhSachNV.listNV);
+  if (nhanVien) {
+    danhSachNV.themNV(nhanVien);
+    renderNV(danhSachNV.listNV);
+  }
 }
 
 function renderNV(arr) {

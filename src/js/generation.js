@@ -53,7 +53,6 @@ const vietnameseNames = [
   'Thị B',
   'Hoàng C',
   'Minh D',
-  'Thị E',
   'Văn F',
   'Thị G',
   'Hoài H',
