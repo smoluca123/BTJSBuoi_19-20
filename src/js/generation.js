@@ -133,3 +133,32 @@ function getRandomRole() {
 function getRandomGioLam() {
   return Math.floor(Math.random() * (200 - 150 + 1) + 150);
 }
+
+function generatePassword() {
+  const specialChars = '!@#$%^&*()_+{}[]:;<>,.?~';
+  const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numericChars = '0123456789';
+
+  const allChars =
+    specialChars + lowercaseChars + uppercaseChars + numericChars;
+  const passwordLength = Math.floor(Math.random() * 5) + 6; // Random length from 6 to 10
+
+  let password = '';
+  password += specialChars[Math.floor(Math.random() * specialChars.length)];
+  password += lowercaseChars[Math.floor(Math.random() * lowercaseChars.length)];
+  password += uppercaseChars[Math.floor(Math.random() * uppercaseChars.length)];
+  password += numericChars[Math.floor(Math.random() * numericChars.length)];
+
+  for (let i = 4; i < passwordLength; i++) {
+    password += allChars[Math.floor(Math.random() * allChars.length)];
+  }
+
+  password = password.split('');
+  for (let i = password.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [password[i], password[j]] = [password[j], password[i]];
+  }
+
+  return password.join('');
+}

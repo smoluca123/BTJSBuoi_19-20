@@ -23,7 +23,7 @@ function DanhSachNhanVien() {
       tongLuong: 900000,
     },
   ];
-  this.listNV = this.debug;
+  this.listNV = [];
 
   this.themNV = function (nv) {
     this.listNV.push(nv);
@@ -33,5 +33,25 @@ function DanhSachNhanVien() {
       fill = fill.toLowerCase().trim();
       return item.loaiNV.toLowerCase().includes(fill);
     });
+  };
+
+  this.findIndexNVByTaiKhoan = function (taiKhoan) {
+    for (var i = 0; i < this.listNV.length; i++) {
+      if (this.listNV[i].taiKhoan === taiKhoan) {
+        return i;
+      }
+    }
+  };
+  this.getInfoNVByTaiKhoan = function (taiKhoan) {
+    var index = this.findIndexNVByTaiKhoan(taiKhoan);
+    return this.listNV[index];
+  };
+  this.deleteNV = function (taiKhoan) {
+    var index = this.findIndexNVByTaiKhoan(taiKhoan);
+    this.listNV.splice(index, 1);
+  };
+  this.updateNV = function (nv) {
+    var index = this.findIndexNVByTaiKhoan(nv.taiKhoan);
+    this.listNV[index] = nv;
   };
 }

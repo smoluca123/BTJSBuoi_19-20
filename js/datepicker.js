@@ -25,5 +25,6 @@ function getToday() {
     '/' +
     d.getFullYear();
   $('#datepicker').val(output);
+  return output;
 }
 $(document).ready(getToday);
