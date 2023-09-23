@@ -28,10 +28,17 @@ function DanhSachNhanVien() {
   this.themNV = function (nv) {
     this.listNV.push(nv);
   };
+  this.removeVietnameseDiacritics = function (str) {
+    return str
+      .normalize('NFD') // Chuyển chuỗi thành Unicode Normalization Form D (NFD)
+      .replace(/[\u0300-\u036f]/g, ''); // Loại bỏ tất cả các ký tự Unicode trong khoảng U+0300 đến U+036F
+  };
   this.timNV = function (fill) {
+    fill = fill.toLowerCase().trim();
     return this.listNV.filter((item, index) => {
-      fill = fill.toLowerCase().trim();
-      return item.loaiNV.toLowerCase().includes(fill);
+      return this.removeVietnameseDiacritics(item.loaiNV)
+        .toLowerCase()
+        .includes(this.removeVietnameseDiacritics(fill));
     });
   };
 
