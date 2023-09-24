@@ -29,6 +29,7 @@ function getInfoNV() {
     checkEmpty(hoTen, '#tbTen', 'Họ tên không được trống'),
     checkString(hoTen, '#tbTen', 'Họ tên không được chứa chữ số'),
     //* Validation Email
+    checkEmpty(email, '#tbEmail', 'Email không được trống'),
     checkEmail(email, '#tbEmail', 'Email không đúng định dạng'),
     //* Validation Ngày làm
     checkEmpty(ngayLam, '#tbGiolam', 'Ngày làm không được trống'),
@@ -37,7 +38,17 @@ function getInfoNV() {
     checkLuongCB(luongCB, '#tbLuongCB', 'Lương cơ bản hợp lệ từ 1M - 20M'),
     //* Validation mật khẩu
     checkEmpty(password, '#tbMatKhau', 'Mật khẩu không được trống'),
-    checkPassword(password, '#tbMatKhau', 'Mật khẩu quá dễ'),
+    checkPassword(password, '#tbMatKhau', 'Mật khẩu không đúng định dạng'),
+    //* Validation Chức vụ
+    checkSelect(
+      $a('#chucvu').selectedIndex,
+      '#tbChucVu',
+      'Chức vụ không được bỏ trống'
+    ),
+    //* Validation Giờ làm
+    checkEmpty(gioLam, '#tbGiolam', 'Giờ làm không được trống'),
+    checkTime(gioLam, '#tbGiolam', 'Giờ làm từ 80 - 200'),
+    //*
   ];
 
   if (valid.includes(false)) return false;
@@ -102,6 +113,7 @@ function suaNV(taiKhoan) {
   $a('#tknv').value = nhanVien.taiKhoan;
   $a('#name').value = nhanVien.hoTen;
   $a('#email').value = nhanVien.email;
+  $a('#password').value = nhanVien.password;
   $a('#datepicker').value = nhanVien.ngayLam;
   $a('#luongCB').value = nhanVien.luongCB;
   $a('#chucvu').value = nhanVien.chucVu;
@@ -115,8 +127,7 @@ function updateNV() {
     danhSachNV.updateNV(nhanVien);
     renderNV(danhSachNV.listNV);
     setLocalStorage();
-    $a('#myModal').click();
-    notiAlert('top-end', 'success', 'Sửa thành công', false, 1000);
+    $a('#btnDong').click();
   }
 }
 
@@ -125,7 +136,6 @@ function xoaNV(taiKhoan) {
   danhSachNV.deleteNV(taiKhoan);
   renderNV(danhSachNV.listNV);
   setLocalStorage();
-  notiAlert('top-end', 'success', 'Xóa thành công', false, 1000);
 }
 
 function setLocalStorage() {
@@ -148,17 +158,6 @@ function genInfo() {
   $a('#chucvu').value = getRandomRole();
   $a('#gioLam').value = getRandomGioLam();
   $a('#password').value = generatePassword();
-}
-
-function notiAlert(position, status, title, showBtn, timeClose, width) {
-  Swal.fire({
-    position: position,
-    icon: status,
-    title: title,
-    showConfirmButton: showBtn,
-    timer: timeClose,
-    width: width || 400,
-  });
 }
 
 renderNV(danhSachNV.listNV);

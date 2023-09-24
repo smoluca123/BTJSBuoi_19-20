@@ -57,14 +57,16 @@ function checkString(value, idNoti, mess) {
 }
 
 function checkEmail(value, idNoti, mess) {
-  var regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-  if (!regex.test(value)) {
-    $a(idNoti).innerHTML = mess;
-    $a(idNoti).style.display = 'block';
-    return false;
+  if (value) {
+    var regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    if (!regex.test(value)) {
+      $a(idNoti).innerHTML = mess;
+      $a(idNoti).style.display = 'block';
+      return false;
+    }
+    $a(idNoti).style.display = 'none';
+    return true;
   }
-  $a(idNoti).style.display = 'none';
-  return true;
 }
 
 function checkLuongCB(value, idNoti, mess) {
@@ -94,4 +96,27 @@ function checkPassword(value, idNoti, mess) {
     return true;
   }
   return false;
+}
+
+function checkSelect(selectIndex, idNoti, mess) {
+  if (selectIndex == 0) {
+    $a(idNoti).innerHTML = mess;
+    $a(idNoti).style.display = 'block';
+    return false;
+  }
+  $a(idNoti).style.display = 'none';
+  return true;
+}
+
+function checkTime(value, idNoti, mess) {
+  if (value) {
+    if (value < 80 || value > 200) {
+      $a(idNoti).style.display = 'block';
+      $a(idNoti).innerHTML = mess;
+      return false;
+    }
+    $a(idNoti).style.display = 'none';
+    $a(idNoti).innerHTML = '';
+    return true;
+  }
 }
